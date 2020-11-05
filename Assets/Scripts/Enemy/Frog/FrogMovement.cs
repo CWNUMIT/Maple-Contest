@@ -5,15 +5,21 @@ using UnityEngine;
 public class FrogMovement : MonoBehaviour
 {
 	[SerializeField] private Frog_Mainbehavior maincode;
+	[SerializeField] private Rigidbody2D FrogRigid2D;
 	[SerializeField] private Animator animator;
-
-	float horizontalMove = 0f;
-	bool jump = false;
-	bool crouch = false;
 	
-    // Update is called once per frame
     void Update()
     {
-        
+		float Vel_Y = FrogRigid2D.velocity.y;
+		
+        if(!maincode.m_Grounded)
+		{
+			animator.SetBool("IsJumping", true);
+			
+			if (Vel_Y > 0) animator.SetBool("IsFalling", false);
+			else animator.SetBool("IsFalling", true);
+		}
+		
+		else animator.SetBool("IsJumping", false);
     }
 }
