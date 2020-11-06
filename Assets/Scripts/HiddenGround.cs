@@ -8,7 +8,7 @@ public class HiddenGround : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            MapleManager.isOn = true;
+            MapleManager._isOn = true;
         }
     }
 }
