@@ -42,11 +42,11 @@ public class MapleManager : MonoBehaviour
             {
                 SceneManager.LoadScene("StartMenu");
             }
+        }
 
-            if(Input.GetKeyDown(KeyCode.R))
-            {
-                SceneManager.LoadScene("Main");
-            }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Main");
         }
     }
 
