@@ -9,7 +9,7 @@ public class EndPoint : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("게임 클리어");
-            MapleManager.isClear = true;
+            MapleManager._isClear = true;
         }
     }
 }

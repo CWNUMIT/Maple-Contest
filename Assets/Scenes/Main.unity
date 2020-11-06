@@ -427,7 +427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3952cf56072a34eb8a44a1c5865801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timer: {fileID: 2037373515}
   _clearTextObject: {fileID: 937616240}
+  _nickname: 
 --- !u!4 &896603780
 Transform:
   m_ObjectHideFlags: 0
@@ -724,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -743,7 +745,7 @@ Canvas:
   m_GameObject: {fileID: 1651705721}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 5467590603887889061}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
