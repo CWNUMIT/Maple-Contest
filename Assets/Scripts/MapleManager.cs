@@ -8,11 +8,11 @@ public class MapleManager : MonoBehaviour
 {
     public Timer _timer;
     public GameObject _clearTextObject;
-    public string _nickname;
+    public string _nickname = "";
 
     public static bool _isOn;
     public static bool _isClear;
-    public static string _nicknameToSend;
+    public static string _nicknameToSend = "";
 
     private bool _isUploadComplete = false;
     private bool _canOverWrite = true;
@@ -42,6 +42,11 @@ public class MapleManager : MonoBehaviour
             {
                 SceneManager.LoadScene("StartMenu");
             }
+
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("Main");
+            }
         }
     }
 
@@ -51,7 +56,14 @@ public class MapleManager : MonoBehaviour
         {
             _clearTextObject.SetActive(true);
             Time.timeScale = 0f;
-            WriteRanking();
+            if(_nickname != "")
+            {
+                WriteRanking();
+            }
+            else
+            {
+                _isUploadComplete = true;
+            }
         }
     }
 
