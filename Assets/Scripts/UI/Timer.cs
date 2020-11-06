@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public string GetTime() { return TimeToString(_t); }
+    public float GetTime() { return _t; }
 
     public string TimeToString(float t)
     {

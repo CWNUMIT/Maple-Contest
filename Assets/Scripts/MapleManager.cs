@@ -8,15 +8,20 @@ public class MapleManager : MonoBehaviour
 {
     public Timer _timer;
     public GameObject _clearTextObject;
-    public static bool _isOn = false;
-    public static bool _isClear = false;
-    public static string _nicknameToSend;
     public string _nickname;
 
+    public static bool _isOn;
+    public static bool _isClear;
+    public static string _nicknameToSend;
+
     private bool _isUploadComplete = false;
+    private bool _canOverWrite = true;
 
     void Start()
     {
+        Time.timeScale = 1f;
+        _isOn = false;
+        _isClear = false;
         _nickname = _nicknameToSend;
     }
 
@@ -46,28 +51,50 @@ public class MapleManager : MonoBehaviour
         {
             _clearTextObject.SetActive(true);
             Time.timeScale = 0f;
-            StartCoroutine(SendDataToServer());
+            WriteRanking();
         }
     }
 
-    public IEnumerator SendDataToServer()
+    void WriteRanking()
+    {
+        StartCoroutine(SendDataToServer());
+    }
+
+    IEnumerator CanOverwriteRanking(List<IMultipartFormSection> form)
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Post("https://mit-games.kr/MAPLE_CONTEST/write_ranking.php", form);
+
+        yield return webRequest.SendWebRequest();
+    }
+
+    IEnumerator SendDataToServer()
     {
         List<IMultipartFormSection> form = new List<IMultipartFormSection>();
         form.Add(new MultipartFormDataSection("Nickname", _nickname));
-        form.Add(new MultipartFormDataSection("ClearTime", _timer.GetTime()));
-        UnityWebRequest webRequest = UnityWebRequest.Post("https://mit-games.kr/MAPLE_CONTEST/write_ranking.php", form);
+        form.Add(new MultipartFormDataSection("ClearTime", _timer.GetTime().ToString()));
         
-        yield return webRequest.SendWebRequest();
-        
-        if(webRequest.isNetworkError || webRequest.isHttpError)
+        yield return CanOverwriteRanking(form);
+
+        if(_canOverWrite)
         {
-            StartCoroutine(SendDataToServer());
-            Debug.Log(webRequest.error);
+            UnityWebRequest webRequest = UnityWebRequest.Post("https://mit-games.kr/MAPLE_CONTEST/write_ranking.php", form);
+
+            yield return webRequest.SendWebRequest();
+        
+            if(webRequest.isNetworkError || webRequest.isHttpError)
+            {
+                StartCoroutine(SendDataToServer());
+                Debug.Log(webRequest.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete");
+                _isUploadComplete = true;
+            }
         }
         else
         {
-            Debug.Log("Form upload complete");
-            _isUploadComplete = true;
+            Debug.Log("기록을 갱신하지 못했습니다.");
         }
     }
 }
