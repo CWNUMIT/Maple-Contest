@@ -12,16 +12,28 @@ public class StartMenu : MonoBehaviour
     public Transform _rankingScrollBar;
     public GameObject _rankingObjPref;
 
+    public GameObject _startMenu;
+    public GameObject _waitToStartText;
+
     void Start()
     {
         _errorText.alpha = 0;
         _errorText.gameObject.SetActive(false);
+
+        _waitToStartText.SetActive(true);
+        _startMenu.SetActive(false);
 
         LoadRanking();
     }
 
     void Update() 
     {
+        if(Input.GetKeyDown(KeyCode.Return) && _waitToStartText.activeSelf && !_startMenu.activeSelf)
+        {
+            _startMenu.SetActive(true);
+            _waitToStartText.SetActive(false);
+        }
+
         if(_errorText.IsActive())
         {
             _errorText.alpha -= Time.unscaledDeltaTime;
